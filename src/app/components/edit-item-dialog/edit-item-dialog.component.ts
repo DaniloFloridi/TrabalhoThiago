@@ -5,13 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
-
-interface DialogData {
-  id: number;
-  name: string;
-  description: string;
-  isEdit: boolean;
-}
+import { TableItem } from '../../items.service';
 
 @Component({
   selector: 'app-edit-item-dialog',
@@ -29,7 +23,7 @@ interface DialogData {
 export class EditItemDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<EditItemDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: TableItem & { isEdit: boolean }
   ) {}
 
   onCancel(): void {

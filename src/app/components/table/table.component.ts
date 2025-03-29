@@ -1,13 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { EditItemDialogComponent } from '../edit-item-dialog/edit-item-dialog.component';
-
-interface TableItem {
-  id: number;
-  name: string;
-  description: string;
-}
+import { ItemsService, TableItem } from '../../items.service';
 
 @Component({
   selector: 'app-table',
@@ -15,15 +10,20 @@ interface TableItem {
   styleUrls: ['./table.component.css'],
   standalone: false
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
-  dataSource = new MatTableDataSource<TableItem>([
-    { id: 1, name: 'Item 1', description: 'Descrição do item 1' },
-    { id: 2, name: 'Item 2', description: 'Descrição do item 2' },
-    { id: 3, name: 'Item 3', description: 'Descrição do item 3' }
-  ]);
+  dataSource = new MatTableDataSource<TableItem>([]);
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private itemsService: ItemsService
+  ) {}
+
+  ngOnInit(): void {
+    this.itemsService.items$.subscribe(items => {
+      this.dataSource.data = items;
+    });
+  }
 
   openAddDialog(): void {
     const dialogRef = this.dialog.open(EditItemDialogComponent, {
@@ -38,7 +38,7 @@ export class TableComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dataSource.data = [...this.dataSource.data, result];
+        this.itemsService.addItem(result);
       }
     });
   }
@@ -51,21 +51,19 @@ export class TableComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const data = this.dataSource.data.map(item => 
-          item.id === result.id ? result : item
-        );
-        this.dataSource.data = data;
+        this.itemsService.updateItem(result);
       }
     });
   }
 
   removeItem(id: number): void {
-    this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);
+    this.itemsService.removeItem(id);
   }
 
   private generateNewId(): number {
-    return this.dataSource.data.length > 0 
-      ? Math.max(...this.dataSource.data.map(item => item.id)) + 1 
+    const currentItems = this.itemsService.getItems();
+    return currentItems.length > 0 
+      ? Math.max(...currentItems.map(item => item.id)) + 1 
       : 1;
   }
 }

@@ -17,13 +17,13 @@
     </div>
   
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!-- ID Column -->
+      <!-- ID Column MM-->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
       </ng-container>
   
-      <!-- Name Column -->
+      <!-- Name Column / Construido Att-->
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
@@ -35,7 +35,7 @@
         <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
       </ng-container>
   
-      <!-- Actions Column -->
+      <!-- Actions Column - Não alterar mesmo que de erro-->
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
         <mat-cell *matCellDef="let element">

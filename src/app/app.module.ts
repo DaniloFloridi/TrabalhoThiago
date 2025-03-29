@@ -3,11 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
-import { CadastroComponent } from './components/cadastro/cadastro.component';
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBar } from '@angular/material/progress-bar';
@@ -19,14 +17,13 @@ import { MatFormField } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ItemsService } from './items.service';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent,
-    CadastroComponent,
     PaginaInicialComponent,
     TableComponent
   ],
